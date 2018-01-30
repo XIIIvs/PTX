@@ -486,14 +486,14 @@ char *yytext;
 #include <stack>
 
 #define YY_DECL extern "C" int yylex()
-#define MAX_DEPTH 72
 
-int nesting = 0 ;
+void transform_range(char* text, int length);
+void nesting(char* text, int length);
 
 using namespace std;
 stack <int> nest_stack;
+int nest_frst = 0;
 
-void transform_range(char* text, int length);
 
 #line 499 "lex.yy.c"
 
@@ -795,7 +795,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 30 "py2rb.l"
-{ECHO;}
+{nesting(yytext, yyleng);}
 	YY_BREAK
 case 5:
 *yy_cp = (yy_hold_char); /* undo effects of setting up yytext */
@@ -1823,6 +1823,32 @@ void transform_range(char* text, int length) {
     for (int i = 6; i < length-2; i++) {
         cout << text[i];
     }
+}
+
+void nesting(char* text, int length) {
+    int nest_level = length;
+
+    if (nest_level > nest_stack.top()) {
+        nest_stack.push(nest_level);
+        if (!nest_frst) {
+            nest_frst = nest_level;
+        }
+    }
+
+    if (nest_level < nest_stack.top()) {
+        while (nest_level < nest_stack.top()) {
+            int spaces = nest_stack.top();
+            nest_stack.pop();
+            for (int i = 0; i < spaces; i++) {
+                cout << " ";
+            }
+            cout << "end\n";
+        }
+        if (nest_stack.top() == 0) {
+            cout << "end\n";
+        }
+    }
+    cout << text;
 }
 
 int main(int argc, char* argv[]) {
