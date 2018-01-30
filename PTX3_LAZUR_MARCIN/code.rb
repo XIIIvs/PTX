@@ -1,8 +1,8 @@
 class SimpleClass
     def function(x=3, a=6, b=9)
-        for i in dupa
+        for i in 0..10
             puts i+i
-            for k in dupa
+            for k in 0..2
                 puts i+k
         if x == 1
             return a

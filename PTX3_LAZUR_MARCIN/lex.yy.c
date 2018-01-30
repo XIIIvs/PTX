@@ -493,7 +493,9 @@ int nesting = 0 ;
 using namespace std;
 stack <int> nest_stack;
 
-#line 497 "lex.yy.c"
+void transform_range(char* text, int length);
+
+#line 499 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -714,10 +716,10 @@ YY_DECL
 		}
 
 	{
-#line 23 "py2rb.l"
+#line 25 "py2rb.l"
 
 
-#line 721 "lex.yy.c"
+#line 723 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -777,22 +779,22 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 25 "py2rb.l"
+#line 27 "py2rb.l"
 {}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 26 "py2rb.l"
+#line 28 "py2rb.l"
 {}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 27 "py2rb.l"
+#line 29 "py2rb.l"
 {cout << "puts";}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 28 "py2rb.l"
+#line 30 "py2rb.l"
 {ECHO;}
 	YY_BREAK
 case 5:
@@ -800,15 +802,15 @@ case 5:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 29 "py2rb.l"
-{cout << "dupa";}
+#line 31 "py2rb.l"
+{transform_range(yytext, yyleng);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 31 "py2rb.l"
+#line 33 "py2rb.l"
 ECHO;
 	YY_BREAK
-#line 812 "lex.yy.c"
+#line 814 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1812,19 +1814,26 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 31 "py2rb.l"
+#line 33 "py2rb.l"
 
 
+
+void transform_range(char* text, int length) {
+    cout << "0..";
+    for (int i = 6; i < length-2; i++) {
+        cout << text[i];
+    }
+}
 
 int main(int argc, char* argv[]) {
-  FILE *kod = fopen("code.py", "r");
-  if (!kod){
-  	cout << "Nie mozna otworzyc" << endl;
-  	return -1;
-  }
+    FILE *kod = fopen("code.py", "r");
+    if (!kod){
+        cout << "Nie mozna otworzyc" << endl;
+        return -1;
+    }
 
-  nest_stack.push(0);
-  yyin = kod;
-  yylex();
-  cout << "\n" ;
+    nest_stack.push(0);
+    yyin = kod;
+    yylex();
+    cout << "\n" ;
 }

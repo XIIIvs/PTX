@@ -12,6 +12,8 @@ int nesting = 0 ;
 using namespace std;
 stack <int> nest_stack;
 
+void transform_range(char* text, int length);
+
 %}
 
 PUNCT [-+*/=<>:]*
@@ -26,19 +28,26 @@ INT [0-9]+
 ":" {}
 "print" {cout << "puts";}
 ^" "* {ECHO;}
-"range".*$ {cout << "dupa";}
+"range".*$ {transform_range(yytext, yyleng);}
 
 %%
 
-int main(int argc, char* argv[]) {
-  FILE *kod = fopen("code.py", "r");
-  if (!kod){
-  	cout << "Nie mozna otworzyc" << endl;
-  	return -1;
-  }
+void transform_range(char* text, int length) {
+    cout << "0..";
+    for (int i = 6; i < length-2; i++) {
+        cout << text[i];
+    }
+}
 
-  nest_stack.push(0);
-  yyin = kod;
-  yylex();
-  cout << "\n" ;
+int main(int argc, char* argv[]) {
+    FILE *kod = fopen("code.py", "r");
+    if (!kod){
+        cout << "Nie mozna otworzyc" << endl;
+        return -1;
+    }
+
+    nest_stack.push(0);
+    yyin = kod;
+    yylex();
+    cout << "\n" ;
 }
