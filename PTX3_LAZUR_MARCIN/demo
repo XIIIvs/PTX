@@ -1,0 +1,33 @@
+#!/bin/bash
+
+echo ""
+echo ""
+echo "Translator podzbioru jednego języka programowania na inny"
+echo "W tym przypadku python 2 na ruby"
+echo "Uwzględnić co najmniej pięć konstrukcji języka"
+
+echo ""
+echo "ENTER -> dalej"
+read enter
+
+echo ""
+echo ""
+echo "Zadanie wykonał Marcin Łazur 396365"
+echo ""
+echo ""
+
+echo "Program w python2:"
+echo ""
+cat code.py
+
+echo ""
+echo "-----------------------------------"
+echo ""
+
+flex py2rb.l
+g++ -o translator lex.yy.c
+./translator > code.rb
+
+echo "Program w ruby:"
+echo ""
+cat code.rb

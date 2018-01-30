@@ -1,48 +1,60 @@
 #!/bin/bash
 
-echo 'Wykonał: Dominik Wiśniewski 396455'
-echo 'Press any ENTER to continue'
-read a
+echo ""
+echo ""
+echo "Program ekstrahujący \"ładny\" tekst w języku polskim ze strony internetowej."
+echo "Przez \"ładny\" tekst rozumiemy kompletne zdania w języku polskim bez żadnych dodatkowych elementów (linki, etc.),"
+echo "w ustalonym jednolitym kodowaniu, podzielony na zdania (1 zdanie w 1 linii)."
+echo "Struktura wejściowej strony internetowej nie jest w żaden sposób określona,"
+echo "Program powinien radzić sobie z dowolnymi stronami."
 
-echo 'Zadanie polega na wyciągnięciu z wikipedi konkretnych informacji'
-echo 'W tym wypadku są to informacje o noblistach'
-echo 'Program potrzebuje imienia bądz nazwiska noblisty i jakiegoś słowa kluczowego'
-echo 'Press any ENTER to continue'
-read a
+echo ""
+echo "ENTER -> dalej"
+read enter
 
 echo 'Do prawidłowego działania wymagana jest biblioteka Nokogiri, zainstalować?[t/n]'
 
 read var
-if [ $var == 't' ] 
+if [ $var == 't' ]
 then
 	echo 'Instaluje...'
 	sudo gem install nokogiri
 fi
 
-echo 'Press any ENTER to continue'
-read a
+echo ""
+echo ""
+echo "Zadanie wykonał Marcin Łazur 396365"
+echo ""
+echo ""
 
-echo 'Przykład działania dla słów: Curie i born'
-echo './App.rb Curie born'
-echo 'Press any ENTER to continue'
-read a
+echo "Instrukcja ogólna:"
+echo "uruchonienie => ./app.rb ARG1"
+echo "Gdzie ARG1 - adres strony internetowej z której ma być ekstahiwany tekst"
+echo "W tym demie odpalony zostanie program kilka razy dla różnych stron"
 
-ruby App.rb Curie born
-echo 'Uzyskaliśmy paragrafy w których prawdopodobnie jest informacja o urodzeniu noblistów o nazwisku Curie'
-echo 'Press any ENTER to continue'
-read a
+echo ""
+echo "ENTER -> dalej"
+read enter
 
-echo 'Przykład działania dla słów: Einstein i died'
-echo './App.rb Einstein died'
-echo 'Press any ENTER to continue'
-read a
+echo "Przykład 1: Strona Wikipedii - Malowany Człowiek"
+echo "ENTER -> dalej"
+read enter
+ruby app.rb https://pl.wikipedia.org/wiki/Malowany_cz%C5%82owiek
 
-ruby App.rb Einstein died
-echo 'Uzyskaliśmy paragraf o śmierci Einsteina'
-echo 'Press any ENTER to continue'
-read a
+echo ""
+echo "ENTER -> dalej"
+read enter
 
-echo 'Instrukcja ogólna: ./App.rb [imie/nazwisko] [słowo_kluczowe]'
-echo 'Oba parametry muszą być podane'
-echo 'Press any ENTER to continue'
-read a
+echo "Przykład 2: Artykuł ze strony cdaction.pl"
+echo "ENTER -> dalej"
+read enter
+ruby app.rb https://www.cdaction.pl/news-52437/dragon-ball-fighterz-miazdzy-konkurencje-na-steamie.html
+
+echo ""
+echo "ENTER -> dalej"
+read enter
+
+echo "Przykład 3: niebezpiecznik.pl - artykuł o meltdown"
+echo "ENTER -> dalej"
+read enter
+ruby app.rb https://niebezpiecznik.pl/post/szczegoly-techniczne-dziury-w-procesorach-intela-amd-i-arm-czyli-ataki-meltdown-i-spectre/
